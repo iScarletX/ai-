@@ -169,6 +169,16 @@ dialog::backdrop { background: rgba(20,18,14,0.45); }
 .query-block .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; }
 .query-block p { margin: 6px 0 0; font-size: 13.5px; }
 
+.agent-output-block { background: #fff; border: 1.5px solid var(--accent, #2f7d4c); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
+.agent-output-block .label { font-size: 11px; color: var(--accent, #2f7d4c); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+.agent-output-row { display: flex; gap: 10px; padding: 6px 0; font-size: 13px; border-bottom: 1px dashed var(--border); }
+.agent-output-row:last-of-type { border-bottom: none; }
+.agent-output-row .ao-label { flex: 0 0 120px; color: var(--text-muted); font-size: 12px; font-weight: 600; }
+.agent-output-row span:last-child { flex: 1; }
+.ao-note { margin: 8px 0 0; font-size: 11.5px; color: var(--text-muted); font-style: italic; }
+.dim-verdict-heading { margin: 4px 0 8px; }
+.dim-verdict-heading .label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; }
+
 .dim-detail { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
 .dim-detail-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--surface-alt); cursor: pointer; }
 .dim-detail-head strong { font-size: 13px; }

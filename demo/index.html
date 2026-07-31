@@ -138,9 +138,14 @@
   <div class="dialog-body">
     <div class="verdict-strip" id="verdictStrip"></div>
     <div class="query-block">
-      <span class="label">Query 原文</span>
+      <span class="label">① 用户 Query 原文</span>
       <p id="dialogQueryText"></p>
     </div>
+    <div class="agent-output-block" id="agentOutputBlock">
+      <span class="label">② Agent 实际运行输出（Judge 评审的对象）</span>
+      <div id="agentOutputBody"></div>
+    </div>
+    <div class="dim-verdict-heading"><span class="label">③ 按五维标准评审上面这次 Agent 输出</span></div>
     <div class="dim-detail-list" id="dimDetailList"></div>
     <div class="severe-block" id="severeBlock"></div>
     <div class="summary-block" id="summaryBlock"></div>

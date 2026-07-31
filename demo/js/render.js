@@ -227,6 +227,23 @@ function openRunDetail(queryId) {
   document.getElementById("dialogQueryText").parentElement.style.display = "block";
   document.getElementById("dialogQueryText").textContent = q.query_text || "（该行为同轮合并组的子对象，Query 文案见锚点行）";
 
+  const run = DataStore.getRun(queryId);
+  document.getElementById("agentOutputBlock").style.display = "block";
+  if (run && run.agent_trace) {
+    const t = run.agent_trace;
+    document.getElementById("agentOutputBody").innerHTML = `
+      <div class="agent-output-row"><span class="ao-label">意图识别</span><span>${t.intent_resolved}</span></div>
+      <div class="agent-output-row"><span class="ao-label">信息处理</span><span>${t.info_handling}</span></div>
+      <div class="agent-output-row"><span class="ao-label">调用的 Skill/工具</span><span>${t.skills_called && t.skills_called.length ? t.skills_called.join('；') : '（未调用）'}</span></div>
+      <div class="agent-output-row"><span class="ao-label">项目状态变化</span><span>${t.state_diff}</span></div>
+      <div class="agent-output-row"><span class="ao-label">产物</span><span>${t.artifact}</span></div>
+      <div class="agent-output-row"><span class="ao-label">最终回复</span><span>${t.final_reply}</span></div>
+      <p class="ao-note">以上为当前模拟数据构造的 Agent 运行记录，用于验证下方五维判分逻辑；接入 NexPlay 后将替换为真实执行证据，字段结构不变。</p>
+    `;
+  } else {
+    document.getElementById("agentOutputBody").innerHTML = `<p class="ao-note">未找到本条 Query 对应的 Agent 运行记录。</p>`;
+  }
+
   document.getElementById("verdictStrip").innerHTML = `
     <div class="verdict-item"><span>最终结论</span><strong class="${v.最终结论.结论==='合格'?'pass':'fail'}">${v.最终结论.结论}</strong></div>
     <div class="verdict-item"><span>总分</span><strong>${v.最终结论.总分} / 5</strong></div>
