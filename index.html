@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 自动评测 · 互动影游 Agent 五维评测</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f4f0; color: #24211c; display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 24px;
+  }
+  .card {
+    max-width: 720px; background: #fff; border: 1px solid #e4e1da; border-radius: 14px;
+    padding: 40px; box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  }
+  h1 { font-size: 22px; margin: 0 0 8px; }
+  p.sub { color: #6b6659; margin: 0 0 28px; font-size: 14px; }
+  .links { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .link-card {
+    display: block; text-decoration: none; border: 1px solid #e4e1da; border-radius: 10px;
+    padding: 18px; color: #24211c; transition: border-color .15s;
+  }
+  .link-card:hover { border-color: #2f7d4c; }
+  .link-card .tag { font-size: 11px; color: #2f7d4c; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+  .link-card h3 { margin: 6px 0 4px; font-size: 15px; }
+  .link-card p { margin: 0; font-size: 12.5px; color: #6b6659; }
+  @media (max-width: 560px) { .links { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>AI 自动评测 · 互动影游 Agent 五维评测</h1>
+    <p class="sub">依据飞书《互动影游 Agent 五维评测执行标准》与《测评Query构建》设计与实现，取代人工逐条评审 Query 的工作流。</p>
+    <div class="links">
+      <a class="link-card" href="spec/index.html">
+        <span class="tag">交付物 1</span>
+        <h3>项目说明书</h3>
+        <p>完整设计思路、流程图、五维标准详解、双门槛机制、输出格式契约（含交互式详情弹窗）</p>
+      </a>
+      <a class="link-card" href="demo/index.html">
+        <span class="tag">交付物 2</span>
+        <h3>AI 评测工作台</h3>
+        <p>98 条真实 Query 全部装入并跑出五维判分结果，可下钻查看每条的证据与结论</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

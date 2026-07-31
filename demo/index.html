@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 自动评测工作台 · 互动影游 Agent 五维评测</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">AI</div>
+      <div class="brand-text">
+        <strong>AI 自动评测工作台</strong>
+        <span>互动影游 Agent 五维评测</span>
+      </div>
+    </div>
+    <nav class="nav-list">
+      <button class="nav-item is-active" data-view="overview">总览</button>
+      <button class="nav-item" data-view="runs">Query Runs</button>
+      <button class="nav-item" data-view="rules">五维评测规则</button>
+      <a class="nav-item nav-item-link" href="../spec/index.html">项目说明书 ↗</a>
+    </nav>
+    <div class="sidebar-footer">
+      <span>数据来源</span>
+      <p>飞书《五维评测执行标准》+《测评Query构建》，共 98 条真实构造 Query</p>
+      <p class="footer-note">当前展示为模拟评测结果，用于验证评分引擎逻辑；真实证据将在接入 NexPlay 后替换。</p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- 总览 -->
+    <section class="view is-active" data-view="overview">
+      <header class="page-head">
+        <div>
+          <h1>AI 自动评测总览</h1>
+          <p>对 98 条 Query 逐条按五维标准打分，取代/对齐人工评审流程。</p>
+        </div>
+      </header>
+      <section class="summary-strip" id="summaryStrip"></section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>五维通过率</h2>
+            <p>每个维度独立统计通过率——高分不能抵消任何单一维度的失败。</p>
+          </div>
+        </div>
+        <div class="dim-bars" id="dimBars"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>最早失败维度分布</h2>
+            <p>同一条 Case 的问题只在最先出错的维度计一次分（最早错误归因）。</p>
+          </div>
+        </div>
+        <div class="dim-bars" id="failBars"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>按主任务类型的合格率</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="taskTypeTable"></table>
+        </div>
+      </section>
+    </section>
+
+    <!-- Query Runs -->
+    <section class="view" data-view="runs">
+      <header class="page-head">
+        <div>
+          <h1>Query Runs</h1>
+          <p>共 98 条，可下钻查看每条的证据与五维判分依据。</p>
+        </div>
+        <div class="filters">
+          <input type="search" id="searchInput" placeholder="搜索项目 / Query 内容 / 编号">
+          <select id="conclusionFilter">
+            <option value="all">全部结论</option>
+            <option value="合格">合格</option>
+            <option value="不合格">不合格</option>
+          </select>
+          <select id="taskTypeFilter">
+            <option value="all">全部任务类型</option>
+          </select>
+          <select id="objectFilter">
+            <option value="all">全部对象</option>
+          </select>
+        </div>
+      </header>
+      <div class="table-wrap">
+        <table id="runsTable">
+          <thead>
+            <tr>
+              <th>Query</th>
+              <th>项目</th>
+              <th>主任务类型 / 对象</th>
+              <th>信息状态</th>
+              <th>D1–D5</th>
+              <th>最早失败</th>
+              <th>结论</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="runsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 规则 -->
+    <section class="view" data-view="rules">
+      <header class="page-head">
+        <div>
+          <h1>五维评测规则</h1>
+          <p>严格来自飞书《互动影游 Agent 五维评测执行标准》，点击维度查看必检项与门槛详情。</p>
+        </div>
+      </header>
+      <div class="rule-grid" id="ruleGrid"></div>
+    </section>
+  </main>
+</div>
+
+<!-- Run 详情弹窗 -->
+<dialog id="runDialog">
+  <div class="dialog-head">
+    <div>
+      <h2 id="dialogTitle">Run 详情</h2>
+      <p id="dialogMeta"></p>
+    </div>
+    <button class="btn-close" id="closeDialog">关闭</button>
+  </div>
+  <div class="dialog-body">
+    <div class="verdict-strip" id="verdictStrip"></div>
+    <div class="query-block">
+      <span class="label">Query 原文</span>
+      <p id="dialogQueryText"></p>
+    </div>
+    <div class="dim-detail-list" id="dimDetailList"></div>
+    <div class="severe-block" id="severeBlock"></div>
+    <div class="summary-block" id="summaryBlock"></div>
+  </div>
+</dialog>
+
+<script src="js/data-loader.js"></script>
+<script src="js/render.js"></script>
+</body>
+</html>

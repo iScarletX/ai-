@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 自动评测项目说明书 · 互动影游 Agent 五维评测</title>
+<link rel="stylesheet" href="spec.css">
+</head>
+<body>
+<div class="doc-shell">
+  <aside class="toc">
+    <div class="toc-brand">
+      <strong>AI 自动评测</strong>
+      <span>项目说明书</span>
+    </div>
+    <nav>
+      <a href="#overview">1. 项目概述</a>
+      <a href="#sources">2. 依据文档</a>
+      <a href="#flow">3. 整体流程</a>
+      <a href="#datamodel">4. Query 数据模型</a>
+      <a href="#five-dim">5. 五维评测设计</a>
+      <a href="#gate4">6. 维度4 双门槛</a>
+      <a href="#output">7. 输出格式契约</a>
+      <a href="#demo">8. 演示页说明</a>
+      <a href="#roadmap">9. 后续接入 NexPlay</a>
+      <a href="../demo/index.html" class="toc-cta">打开演示页 ↗</a>
+    </nav>
+  </aside>
+
+  <main class="doc-main">
+    <header class="doc-hero">
+      <h1>AI 自动评测项目说明书</h1>
+      <p>把 Longbean 平台"AI 自动评测"背后的真实逻辑设计出来——对每一条 Query，严格按照《互动影游 Agent 五维评测执行标准》打出 D1–D5 分数，取代人工逐条评审。</p>
+      <div class="hero-tags">
+        <span class="tag">五维标准</span>
+        <span class="tag">98 条真实 Query</span>
+        <span class="tag">双门槛判定</span>
+        <span class="tag">最早错误归因</span>
+      </div>
+    </header>
+
+    <section id="overview" class="doc-section">
+      <h2>1. 项目概述</h2>
+      <p>Longbean 是评测互动影游创作 Agent（NexPlay）表现的平台。它的"AI 自动评测"页面负责：把人工评审员逐条打分的工作，换成 AI 裁判自动执行——对每条 Query，读取 Agent 的真实运行结果，按标准判出 D1–D5 五维分数、严重错误、最终结论，与人工评审结果并列对比。</p>
+      <p>本项目交付两个产物：</p>
+      <ol>
+        <li><b>本说明书</b>——完整记录设计思路、数据模型、评分逻辑与后续接入计划。</li>
+        <li><b><a href="../demo/index.html">AI 评测工作台演示页</a></b>——已经把 98 条真实 Query 装入引擎、模拟出 Agent 运行结果并跑出完整五维判分，可直接点开查看每条的证据与结论。</li>
+      </ol>
+    </section>
+
+    <section id="sources" class="doc-section">
+      <h2>2. 依据文档</h2>
+      <p>本项目严格依据两份飞书文档设计，不引入其他推断的规则：</p>
+      <div class="source-cards">
+        <div class="source-card">
+          <span class="source-tag">评分标准</span>
+          <h3>《互动影游 Agent 五维评测执行标准》</h3>
+          <p>定义评测哲学、五维必检项与评分规则、维度4双门槛机制、7类对象内容标准、严重错误清单、最早错误归因规则、单次评测输出格式模板。</p>
+        </div>
+        <div class="source-card">
+          <span class="source-tag">Query 数据</span>
+          <h3>《测评Query构建》XHkZeV 子表</h3>
+          <p>100 行项目化 Query（98 条有效），覆盖 13 个虚构项目、6 类主任务类型、6 类对象、5 种信息状态的均衡组合。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="flow" class="doc-section">
+      <h2>3. 整体流程</h2>
+      <p>点击流程图中的每一步，查看该步骤的详细设计说明。</p>
+      <div class="flow-diagram" id="flowDiagram"></div>
+    </section>
+
+    <section id="datamodel" class="doc-section">
+      <h2>4. Query 数据模型</h2>
+      <p>每条 Query 携带以下核心字段，直接对应评测标准第四部分"Query信息"里要求的输入字段：</p>
+      <div class="field-table-wrap">
+        <table class="field-table">
+          <thead><tr><th>字段</th><th>说明</th><th>示例</th></tr></thead>
+          <tbody>
+            <tr><td><code>Q1 / Q2</code></td><td>意图分类编号；Q2 是叠加在 Q1 之上的信息状态修饰符（如"信息缺失但可判断目标"）</td><td>Q-9 + Q-40</td></tr>
+            <tr><td><code>主任务类型</code></td><td>新建内容 / 修改内容 / 评审内容 / 查询与决策 / 执行操作 / 故障恢复</td><td>修改内容</td></tr>
+            <tr><td><code>对象</code></td><td>跨模块／综合任务 / 大纲 / 角色场景道具资产 / 分集剧情 / 分镜视频 / 封面</td><td>大纲</td></tr>
+            <tr><td><code>信息状态</code></td><td>足够 / 缺失可自动补齐 / 缺失必须用户补充 / 模糊 / 冲突</td><td>模糊</td></tr>
+            <tr><td><code>项目编号 / 项目名称</code></td><td>13 个虚构项目之一，提供题材背景上下文</td><td>P02 · 山河棋局</td></tr>
+            <tr><td><code>query 原文</code></td><td>真实用户会说的一句话；不包含环境事实（Fixture 与 Query 严格分离）</td><td>"把大纲改得更黑暗一点。"</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-info">
+        <b>关于同轮合并：</b>部分 Query 的"串联方式"为"同轮合并"——一次真实用户发言同时涉及多个对象（比如一句话里同时要求改大纲+改场景资产+重出场景图）。这种情况下，只有锚点行携带真实 Query 文案，其余同组行标注为共享该文案的子对象，用于在维度4门槛二里分别核对各自的对象内容标准。
+      </div>
+    </section>
+
+    <section id="five-dim" class="doc-section">
+      <h2>5. 五维评测设计</h2>
+      <p>每个维度独立评 0/1 分，满分 5 分。高分不能抵消任何单一维度的失败——这是标准里反复强调的核心原则。</p>
+      <div class="dim-cards" id="dimCards"></div>
+    </section>
+
+    <section id="gate4" class="doc-section">
+      <h2>6. 维度4 双门槛机制（本项目设计的重点）</h2>
+      <p>维度4 是五维里唯一采用"双门槛"结构的维度，也是设计和实现时最容易出错的部分。</p>
+      <div class="gate-flow">
+        <div class="gate-step">
+          <div class="gate-step-num">门槛一</div>
+          <h3>Query 指令遵循</h3>
+          <p>只看 Query 表的三个字段：主任务类型、对象、Query 原文。依次检查：动作对不对、对象对不对、原文要求全做到没、保持/禁止/同步项满足没。</p>
+          <p class="gate-rule">任一项为"否" → 维度4直接 0 分，<b>不进入门槛二</b>。</p>
+        </div>
+        <div class="gate-arrow">→</div>
+        <div class="gate-step">
+          <div class="gate-step-num">门槛二</div>
+          <h3>内部任务对象内容标准</h3>
+          <p>只有门槛一通过时才会执行。按 Query 的"对象"字段，从 6 类对象检查清单中加载对应清单，逐项判定。</p>
+          <p class="gate-rule">任意一项不通过 → 维度4 为 0 分；全部通过 → 维度4 为 1 分。</p>
+        </div>
+      </div>
+      <div class="callout callout-warn">
+        <b>设计取舍记录：</b>标准原文里"角色、场景、道具资产"和"分镜视频"两类对象的检查清单，原文是<b>一条连续列表</b>（没有按人物/场景/图片/音色等拆分成子清单的显式标记）。本项目严格按原文实现为单一连续清单，不做未经标准授权的额外拆分——这是此前一版设计中出现过的偏差，已经纠正。
+      </div>
+      <button class="text-btn-lg" id="viewRubricsBtn">查看全部 6 类对象检查清单 →</button>
+    </section>
+
+    <section id="output" class="doc-section">
+      <h2>7. 输出格式契约</h2>
+      <p>Judge 的输出严格对齐标准原文第四部分"单次评测输出格式"，不新增标准之外的字段（例如不引入自造的证据编号系统、置信度分数等）。</p>
+      <pre class="code-block" id="outputSchemaBlock"></pre>
+    </section>
+
+    <section id="demo" class="doc-section">
+      <h2>8. 演示页说明</h2>
+      <p><a href="../demo/index.html">AI 评测工作台演示页</a> 已经把这套设计完整跑通：</p>
+      <ul class="checklist-ul">
+        <li>98 条真实 Query 全部装入，附带模拟的 Agent 运行结果（用于在未接入 NexPlay 前验证评分引擎逻辑）</li>
+        <li>逐条按五维标准判分，包含维度4双门槛的正确联动（门槛一不过时门槛二显式留空）</li>
+        <li>严重错误独立判定，命中时不受总分影响直接判不合格</li>
+        <li>最早错误归因：每条 Case 标出最先出错的维度</li>
+        <li>总览页统计五维通过率、失败维度分布、按任务类型的合格率</li>
+        <li>点击任意 Query 可查看完整证据与判分依据，格式与标准第四部分模板一致</li>
+      </ul>
+      <div class="callout callout-info">
+        <b>重要边界：</b>当前演示页里的"Agent 运行结果"是模拟构造的，不是从 NexPlay 真实执行拿到的——这一点在演示页侧边栏也有明确标注。目的是验证评分引擎本身的逻辑是否正确、可用，不代表已完成真实评测。
+      </div>
+    </section>
+
+    <section id="roadmap" class="doc-section">
+      <h2>9. 后续接入 NexPlay</h2>
+      <p>当真实数据（Agent 针对每条 Query 的运行结果）到位后，接入路径是：</p>
+      <div class="roadmap-steps">
+        <div class="roadmap-step"><b>1</b><p>把 <code>demo/data/simulated_runs.json</code> 替换为真实运行结果，字段结构保持一致（Fixture + Agent Trace 摘要）</p></div>
+        <div class="roadmap-step"><b>2</b><p>判分引擎（当前实现在 <code>demo/data</code> 的生成脚本中）改为读取真实证据而非模拟规则触发判定</p></div>
+        <div class="roadmap-step"><b>3</b><p>结果结构已经对齐标准输出格式，可直接用于跟人工评审结果的对比展示</p></div>
+      </div>
+    </section>
+
+    <footer class="doc-footer">
+      <p>本说明书与演示页均为静态文档，可直接在浏览器中打开使用，无需安装或下载任何依赖。</p>
+    </footer>
+  </main>
+</div>
+
+<dialog id="detailDialog">
+  <div class="dialog-head">
+    <h2 id="detailTitle"></h2>
+    <button class="btn-close" id="closeDetail">关闭</button>
+  </div>
+  <div class="dialog-body" id="detailBody"></div>
+</dialog>
+
+<script src="spec.js"></script>
+</body>
+</html>

@@ -1,0 +1,1833 @@
+{
+  "q001": {
+    "query_id": "q001",
+    "fixture": {
+      "project": "P01 · 宫阙浮生",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=跨模块／综合任务，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q002": {
+    "query_id": "q002",
+    "fixture": {
+      "project": "P01 · 宫阙浮生",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=大纲，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q003": {
+    "query_id": "q003",
+    "fixture": {
+      "project": "P01 · 宫阙浮生",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d4_scope_creep",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产 Skill",
+        "额外触发了未授权的关联对象修改"
+      ],
+      "state_diff": "除 Query 授权范围外，还修改了用户未要求变更的内容",
+      "artifact": "真实产物已生成，但夹带未授权改动",
+      "final_reply": "已完成，并顺带优化了相关的其他内容。"
+    }
+  },
+  "q004": {
+    "query_id": "q004",
+    "fixture": {
+      "project": "P01 · 宫阙浮生",
+      "target_object": "分集剧情",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=分集剧情",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q005": {
+    "query_id": "q005",
+    "fixture": {
+      "project": "P01 · 宫阙浮生",
+      "target_object": "封面",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d5_incomplete_delivery",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=封面",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产 Skill"
+      ],
+      "state_diff": "核心对象已修改，但下游关联对象未同步",
+      "artifact": "核心产物存在，但缺少必要编号/引用，下游无法直接使用",
+      "final_reply": "已修改完成。"
+    }
+  },
+  "q006": {
+    "query_id": "q006",
+    "fixture": {
+      "project": "P01 · 宫阙浮生",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d2_over_ask",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=大纲",
+      "info_handling": "一次性追问了多个信息项，而不是只问最阻塞的一项（违反 D2 追问规则）",
+      "skills_called": [],
+      "state_diff": "未执行任何写入",
+      "artifact": "无（等待用户回复）",
+      "final_reply": "请提供以下几项信息：A、B、C、D……"
+    }
+  },
+  "q007": {
+    "query_id": "q007",
+    "fixture": {
+      "project": "P01 · 宫阙浮生",
+      "target_object": "分集剧情",
+      "information_state": "缺失－可自动补齐"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=分集剧情",
+      "info_handling": "从当前请求、选中对象、项目内容、用户材料、上游产物或工具返回中补齐后继续",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q008": {
+    "query_id": "q008",
+    "fixture": {
+      "project": "P01 · 宫阙浮生",
+      "target_object": "大纲",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=故障恢复，对象=大纲，按标准动作：只处理失败单元，不重复成功内容，保留原输入和参考材料",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q009": {
+    "query_id": "q009",
+    "fixture": {
+      "project": "P02 · 山河棋局",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q010": {
+    "query_id": "q010",
+    "fixture": {
+      "project": "P02 · 山河棋局",
+      "target_object": "大纲",
+      "information_state": "模糊"
+    },
+    "outcome_tag": "d5_incomplete_delivery",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=大纲",
+      "info_handling": "先利用上下文消歧；仍有多个合理解释时，再提出具体问题",
+      "skills_called": [
+        "对应生产 Skill"
+      ],
+      "state_diff": "核心对象已修改，但下游关联对象未同步",
+      "artifact": "核心产物存在，但缺少必要编号/引用，下游无法直接使用",
+      "final_reply": "已修改完成。"
+    }
+  },
+  "q011": {
+    "query_id": "q011",
+    "fixture": {
+      "project": "P02 · 山河棋局",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=跨模块／综合任务，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q012": {
+    "query_id": "q012",
+    "fixture": {
+      "project": "P02 · 山河棋局",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=角色、场景、道具资产，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q013": {
+    "query_id": "q013",
+    "fixture": {
+      "project": "P02 · 山河棋局",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=角色、场景、道具资产，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q014": {
+    "query_id": "q014",
+    "fixture": {
+      "project": "P02 · 山河棋局",
+      "target_object": "分镜视频",
+      "information_state": "缺失－可自动补齐"
+    },
+    "outcome_tag": "d2_over_ask",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=分镜视频",
+      "info_handling": "一次性追问了多个信息项，而不是只问最阻塞的一项（违反 D2 追问规则）",
+      "skills_called": [],
+      "state_diff": "未执行任何写入",
+      "artifact": "无（等待用户回复）",
+      "final_reply": "请提供以下几项信息：A、B、C、D……"
+    }
+  },
+  "q015": {
+    "query_id": "q015",
+    "fixture": {
+      "project": "P02 · 山河棋局",
+      "target_object": "分镜视频",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=查询与决策，对象=分镜视频，按标准动作：从项目状态中检索并回答，默认不得修改项目",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q016": {
+    "query_id": "q016",
+    "fixture": {
+      "project": "P02 · 山河棋局",
+      "target_object": "分集剧情",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d4_scope_creep",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=分集剧情",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产 Skill",
+        "额外触发了未授权的关联对象修改"
+      ],
+      "state_diff": "除 Query 授权范围外，还修改了用户未要求变更的内容",
+      "artifact": "真实产物已生成，但夹带未授权改动",
+      "final_reply": "已完成，并顺带优化了相关的其他内容。"
+    }
+  },
+  "q017": {
+    "query_id": "q017",
+    "fixture": {
+      "project": "P03 · 锦宅春秋",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=大纲，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q018": {
+    "query_id": "q018",
+    "fixture": {
+      "project": "P03 · 锦宅春秋",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q019": {
+    "query_id": "q019",
+    "fixture": {
+      "project": "P03 · 锦宅春秋",
+      "target_object": "分镜视频",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=分镜视频，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q020": {
+    "query_id": "q020",
+    "fixture": {
+      "project": "P03 · 锦宅春秋",
+      "target_object": "分镜视频",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d5_incomplete_delivery",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=分镜视频",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产 Skill"
+      ],
+      "state_diff": "核心对象已修改，但下游关联对象未同步",
+      "artifact": "核心产物存在，但缺少必要编号/引用，下游无法直接使用",
+      "final_reply": "已修改完成。"
+    }
+  },
+  "q021": {
+    "query_id": "q021",
+    "fixture": {
+      "project": "P03 · 锦宅春秋",
+      "target_object": "分镜视频",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=分镜视频",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q022": {
+    "query_id": "q022",
+    "fixture": {
+      "project": "P03 · 锦宅春秋",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=故障恢复，对象=角色、场景、道具资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q023": {
+    "query_id": "q023",
+    "fixture": {
+      "project": "P03 · 锦宅春秋",
+      "target_object": "分镜视频",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=故障恢复，对象=分镜视频，按标准动作：只处理失败单元，不重复成功内容，保留原输入和参考材料",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q024": {
+    "query_id": "q024",
+    "fixture": {
+      "project": "P04 · 星火温室",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=查询与决策，对象=跨模块／综合任务，按标准动作：从项目状态中检索并回答，默认不得修改项目",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q025": {
+    "query_id": "q025",
+    "fixture": {
+      "project": "P04 · 星火温室",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=跨模块／综合任务，按标准动作：必须真实调用对应能力，并检查执行状态",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q026": {
+    "query_id": "q026",
+    "fixture": {
+      "project": "P04 · 星火温室",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=角色、场景、道具资产，按标准动作：必须真实调用对应能力，并检查执行状态",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q027": {
+    "query_id": "q027",
+    "fixture": {
+      "project": "P04 · 星火温室",
+      "target_object": "分集剧情",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d5_incomplete_delivery",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=分集剧情",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产 Skill"
+      ],
+      "state_diff": "核心对象已修改，但下游关联对象未同步",
+      "artifact": "核心产物存在，但缺少必要编号/引用，下游无法直接使用",
+      "final_reply": "已修改完成。"
+    }
+  },
+  "q028": {
+    "query_id": "q028",
+    "fixture": {
+      "project": "P04 · 星火温室",
+      "target_object": "分镜视频",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=分镜视频",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q029": {
+    "query_id": "q029",
+    "fixture": {
+      "project": "P04 · 星火温室",
+      "target_object": "封面",
+      "information_state": "冲突"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=查询与决策，对象=封面，按标准动作：从项目状态中检索并回答，默认不得修改项目",
+      "info_handling": "明确指出冲突并确认，不得静默覆盖",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q030": {
+    "query_id": "q030",
+    "fixture": {
+      "project": "P04 · 星火温室",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d5_incomplete_delivery",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=角色、场景、道具资产",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产 Skill"
+      ],
+      "state_diff": "核心对象已修改，但下游关联对象未同步",
+      "artifact": "核心产物存在，但缺少必要编号/引用，下游无法直接使用",
+      "final_reply": "已修改完成。"
+    }
+  },
+  "q031": {
+    "query_id": "q031",
+    "fixture": {
+      "project": "P04 · 星火温室",
+      "target_object": "分集剧情",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=故障恢复，对象=分集剧情，按标准动作：只处理失败单元，不重复成功内容，保留原输入和参考材料",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q032": {
+    "query_id": "q032",
+    "fixture": {
+      "project": "P05 · 夏日心动公式",
+      "target_object": "大纲",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=大纲，按标准动作：必须真实调用对应能力，并检查执行状态",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q033": {
+    "query_id": "q033",
+    "fixture": {
+      "project": "P05 · 夏日心动公式",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=跨模块／综合任务，按标准动作：必须真实调用对应能力，并检查执行状态",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q034": {
+    "query_id": "q034",
+    "fixture": {
+      "project": "P05 · 夏日心动公式",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=查询与决策，对象=大纲，按标准动作：从项目状态中检索并回答，默认不得修改项目",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q035": {
+    "query_id": "q035",
+    "fixture": {
+      "project": "P05 · 夏日心动公式",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=查询与决策，对象=角色、场景、道具资产，按标准动作：从项目状态中检索并回答，默认不得修改项目",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q036": {
+    "query_id": "q036",
+    "fixture": {
+      "project": "P05 · 夏日心动公式",
+      "target_object": "分集剧情",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=查询与决策，对象=分集剧情，按标准动作：从项目状态中检索并回答，默认不得修改项目",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q037": {
+    "query_id": "q037",
+    "fixture": {
+      "project": "P05 · 夏日心动公式",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=角色、场景、道具资产，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q038": {
+    "query_id": "q038",
+    "fixture": {
+      "project": "P05 · 夏日心动公式",
+      "target_object": "分集剧情",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d4_scope_creep",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=分集剧情",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产 Skill",
+        "额外触发了未授权的关联对象修改"
+      ],
+      "state_diff": "除 Query 授权范围外，还修改了用户未要求变更的内容",
+      "artifact": "真实产物已生成，但夹带未授权改动",
+      "final_reply": "已完成，并顺带优化了相关的其他内容。"
+    }
+  },
+  "q039": {
+    "query_id": "q039",
+    "fixture": {
+      "project": "P05 · 夏日心动公式",
+      "target_object": "分镜视频",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=分镜视频，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q040": {
+    "query_id": "q040",
+    "fixture": {
+      "project": "P06 · 她的第二人生",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=跨模块／综合任务，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q041": {
+    "query_id": "q041",
+    "fixture": {
+      "project": "P06 · 她的第二人生",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "缺失－可自动补齐"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "从当前请求、选中对象、项目内容、用户材料、上游产物或工具返回中补齐后继续",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q042": {
+    "query_id": "q042",
+    "fixture": {
+      "project": "P06 · 她的第二人生",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q043": {
+    "query_id": "q043",
+    "fixture": {
+      "project": "P06 · 她的第二人生",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d5_incomplete_delivery",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=跨模块／综合任务",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产 Skill"
+      ],
+      "state_diff": "核心对象已修改，但下游关联对象未同步",
+      "artifact": "核心产物存在，但缺少必要编号/引用，下游无法直接使用",
+      "final_reply": "已修改完成。"
+    }
+  },
+  "q044": {
+    "query_id": "q044",
+    "fixture": {
+      "project": "P06 · 她的第二人生",
+      "target_object": "封面",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=封面，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q045": {
+    "query_id": "q045",
+    "fixture": {
+      "project": "P06 · 她的第二人生",
+      "target_object": "分集剧情",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=查询与决策，对象=分集剧情，按标准动作：从项目状态中检索并回答，默认不得修改项目",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q046": {
+    "query_id": "q046",
+    "fixture": {
+      "project": "P06 · 她的第二人生",
+      "target_object": "分镜视频",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d4_scope_creep",
+    "agent_trace": {
+      "intent_resolved": "识别目标=查询与决策，对象=分镜视频",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产 Skill",
+        "额外触发了未授权的关联对象修改"
+      ],
+      "state_diff": "除 Query 授权范围外，还修改了用户未要求变更的内容",
+      "artifact": "真实产物已生成，但夹带未授权改动",
+      "final_reply": "已完成，并顺带优化了相关的其他内容。"
+    }
+  },
+  "q047": {
+    "query_id": "q047",
+    "fixture": {
+      "project": "P06 · 她的第二人生",
+      "target_object": "分集剧情",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d5_incomplete_delivery",
+    "agent_trace": {
+      "intent_resolved": "识别目标=故障恢复，对象=分集剧情",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产 Skill"
+      ],
+      "state_diff": "核心对象已修改，但下游关联对象未同步",
+      "artifact": "核心产物存在，但缺少必要编号/引用，下游无法直接使用",
+      "final_reply": "已修改完成。"
+    }
+  },
+  "q048": {
+    "query_id": "q048",
+    "fixture": {
+      "project": "P07 · 云上戏班",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "缺失－可自动补齐"
+    },
+    "outcome_tag": "d2_over_ask",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产",
+      "info_handling": "一次性追问了多个信息项，而不是只问最阻塞的一项（违反 D2 追问规则）",
+      "skills_called": [],
+      "state_diff": "未执行任何写入",
+      "artifact": "无（等待用户回复）",
+      "final_reply": "请提供以下几项信息：A、B、C、D……"
+    }
+  },
+  "q049": {
+    "query_id": "q049",
+    "fixture": {
+      "project": "P07 · 云上戏班",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "缺失－可自动补齐"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=角色、场景、道具资产，按标准动作：必须真实调用对应能力，并检查执行状态",
+      "info_handling": "从当前请求、选中对象、项目内容、用户材料、上游产物或工具返回中补齐后继续",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q050": {
+    "query_id": "q050",
+    "fixture": {
+      "project": "P07 · 云上戏班",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "模糊"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=角色、场景、道具资产，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "先利用上下文消歧；仍有多个合理解释时，再提出具体问题",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q051": {
+    "query_id": "q051",
+    "fixture": {
+      "project": "P07 · 云上戏班",
+      "target_object": "封面",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=封面，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q052": {
+    "query_id": "q052",
+    "fixture": {
+      "project": "P07 · 云上戏班",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=跨模块／综合任务，按标准动作：读取并引用证据，默认不得擅自写回项目",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q053": {
+    "query_id": "q053",
+    "fixture": {
+      "project": "P07 · 云上戏班",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=大纲，按标准动作：读取并引用证据，默认不得擅自写回项目",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q054": {
+    "query_id": "q054",
+    "fixture": {
+      "project": "P07 · 云上戏班",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=角色、场景、道具资产，按标准动作：读取并引用证据，默认不得擅自写回项目",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q055": {
+    "query_id": "q055",
+    "fixture": {
+      "project": "P07 · 云上戏班",
+      "target_object": "分集剧情",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d2_over_ask",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=分集剧情",
+      "info_handling": "一次性追问了多个信息项，而不是只问最阻塞的一项（违反 D2 追问规则）",
+      "skills_called": [],
+      "state_diff": "未执行任何写入",
+      "artifact": "无（等待用户回复）",
+      "final_reply": "请提供以下几项信息：A、B、C、D……"
+    }
+  },
+  "q056": {
+    "query_id": "q056",
+    "fixture": {
+      "project": "P08 · 昨日邮局",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=大纲，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q057": {
+    "query_id": "q057",
+    "fixture": {
+      "project": "P08 · 昨日邮局",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "冲突"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "明确指出冲突并确认，不得静默覆盖",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q058": {
+    "query_id": "q058",
+    "fixture": {
+      "project": "P08 · 昨日邮局",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q059": {
+    "query_id": "q059",
+    "fixture": {
+      "project": "P08 · 昨日邮局",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q060": {
+    "query_id": "q060",
+    "fixture": {
+      "project": "P08 · 昨日邮局",
+      "target_object": "分镜视频",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d2_over_ask",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=分镜视频",
+      "info_handling": "一次性追问了多个信息项，而不是只问最阻塞的一项（违反 D2 追问规则）",
+      "skills_called": [],
+      "state_diff": "未执行任何写入",
+      "artifact": "无（等待用户回复）",
+      "final_reply": "请提供以下几项信息：A、B、C、D……"
+    }
+  },
+  "q061": {
+    "query_id": "q061",
+    "fixture": {
+      "project": "P08 · 昨日邮局",
+      "target_object": "封面",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d4_scope_creep",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=封面",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产 Skill",
+        "额外触发了未授权的关联对象修改"
+      ],
+      "state_diff": "除 Query 授权范围外，还修改了用户未要求变更的内容",
+      "artifact": "真实产物已生成，但夹带未授权改动",
+      "final_reply": "已完成，并顺带优化了相关的其他内容。"
+    }
+  },
+  "q062": {
+    "query_id": "q062",
+    "fixture": {
+      "project": "P08 · 昨日邮局",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "缺失－可自动补齐"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=角色、场景、道具资产，按标准动作：必须真实调用对应能力，并检查执行状态",
+      "info_handling": "从当前请求、选中对象、项目内容、用户材料、上游产物或工具返回中补齐后继续",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q063": {
+    "query_id": "q063",
+    "fixture": {
+      "project": "P08 · 昨日邮局",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=角色、场景、道具资产，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q064": {
+    "query_id": "q064",
+    "fixture": {
+      "project": "P08 · 昨日邮局",
+      "target_object": "分集剧情",
+      "information_state": "模糊"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=分集剧情",
+      "info_handling": "先利用上下文消歧；仍有多个合理解释时，再提出具体问题",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q065": {
+    "query_id": "q065",
+    "fixture": {
+      "project": "P09 · 镜头之外",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=大纲，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q066": {
+    "query_id": "q066",
+    "fixture": {
+      "project": "P09 · 镜头之外",
+      "target_object": "跨模块／综合任务",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=跨模块／综合任务",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q067": {
+    "query_id": "q067",
+    "fixture": {
+      "project": "P09 · 镜头之外",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=角色、场景、道具资产，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q068": {
+    "query_id": "q068",
+    "fixture": {
+      "project": "P09 · 镜头之外",
+      "target_object": "分集剧情",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=分集剧情，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q069": {
+    "query_id": "q069",
+    "fixture": {
+      "project": "P09 · 镜头之外",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=跨模块／综合任务，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q070": {
+    "query_id": "q070",
+    "fixture": {
+      "project": "P09 · 镜头之外",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=大纲，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q071": {
+    "query_id": "q071",
+    "fixture": {
+      "project": "P09 · 镜头之外",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=角色、场景、道具资产，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q072": {
+    "query_id": "q072",
+    "fixture": {
+      "project": "P09 · 镜头之外",
+      "target_object": "跨模块／综合任务",
+      "information_state": "冲突"
+    },
+    "outcome_tag": "d2_over_ask",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=跨模块／综合任务",
+      "info_handling": "一次性追问了多个信息项，而不是只问最阻塞的一项（违反 D2 追问规则）",
+      "skills_called": [],
+      "state_diff": "未执行任何写入",
+      "artifact": "无（等待用户回复）",
+      "final_reply": "请提供以下几项信息：A、B、C、D……"
+    }
+  },
+  "q073": {
+    "query_id": "q073",
+    "fixture": {
+      "project": "P09 · 镜头之外",
+      "target_object": "封面",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=故障恢复，对象=封面，按标准动作：只处理失败单元，不重复成功内容，保留原输入和参考材料",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q074": {
+    "query_id": "q074",
+    "fixture": {
+      "project": "P10 · 五亿合伙人",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=大纲，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q075": {
+    "query_id": "q075",
+    "fixture": {
+      "project": "P10 · 五亿合伙人",
+      "target_object": "分集剧情",
+      "information_state": "缺失－可自动补齐"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=分集剧情，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "从当前请求、选中对象、项目内容、用户材料、上游产物或工具返回中补齐后继续",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q076": {
+    "query_id": "q076",
+    "fixture": {
+      "project": "P10 · 五亿合伙人",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "模糊"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=角色、场景、道具资产，按标准动作：必须真实调用对应能力，并检查执行状态",
+      "info_handling": "先利用上下文消歧；仍有多个合理解释时，再提出具体问题",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q077": {
+    "query_id": "q077",
+    "fixture": {
+      "project": "P10 · 五亿合伙人",
+      "target_object": "分镜视频",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d4_scope_creep",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=分镜视频",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产 Skill",
+        "额外触发了未授权的关联对象修改"
+      ],
+      "state_diff": "除 Query 授权范围外，还修改了用户未要求变更的内容",
+      "artifact": "真实产物已生成，但夹带未授权改动",
+      "final_reply": "已完成，并顺带优化了相关的其他内容。"
+    }
+  },
+  "q078": {
+    "query_id": "q078",
+    "fixture": {
+      "project": "P10 · 五亿合伙人",
+      "target_object": "跨模块／综合任务",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=跨模块／综合任务，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q079": {
+    "query_id": "q079",
+    "fixture": {
+      "project": "P10 · 五亿合伙人",
+      "target_object": "大纲",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=大纲，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q080": {
+    "query_id": "q080",
+    "fixture": {
+      "project": "P10 · 五亿合伙人",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "缺失－可自动补齐"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=角色、场景、道具资产，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "从当前请求、选中对象、项目内容、用户材料、上游产物或工具返回中补齐后继续",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q081": {
+    "query_id": "q081",
+    "fixture": {
+      "project": "P10 · 五亿合伙人",
+      "target_object": "角色、场景、道具资产",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d5_incomplete_delivery",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=角色、场景、道具资产",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产 Skill"
+      ],
+      "state_diff": "核心对象已修改，但下游关联对象未同步",
+      "artifact": "核心产物存在，但缺少必要编号/引用，下游无法直接使用",
+      "final_reply": "已修改完成。"
+    }
+  },
+  "q082": {
+    "query_id": "q082",
+    "fixture": {
+      "project": "P11 · 心动合租屋",
+      "target_object": "跨模块／综合任务",
+      "information_state": "冲突"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=跨模块／综合任务，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "明确指出冲突并确认，不得静默覆盖",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q083": {
+    "query_id": "q083",
+    "fixture": {
+      "project": "P11 · 心动合租屋",
+      "target_object": "大纲",
+      "information_state": "模糊"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=大纲，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "先利用上下文消歧；仍有多个合理解释时，再提出具体问题",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q084": {
+    "query_id": "q084",
+    "fixture": {
+      "project": "P11 · 心动合租屋",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=大纲，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q085": {
+    "query_id": "q085",
+    "fixture": {
+      "project": "P11 · 心动合租屋",
+      "target_object": "分集剧情",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=分集剧情",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q086": {
+    "query_id": "q086",
+    "fixture": {
+      "project": "P11 · 心动合租屋",
+      "target_object": "封面",
+      "information_state": "冲突"
+    },
+    "outcome_tag": "d4_scope_creep",
+    "agent_trace": {
+      "intent_resolved": "识别目标=执行操作，对象=封面",
+      "info_handling": "明确指出冲突并确认，不得静默覆盖",
+      "skills_called": [
+        "对应生产 Skill",
+        "额外触发了未授权的关联对象修改"
+      ],
+      "state_diff": "除 Query 授权范围外，还修改了用户未要求变更的内容",
+      "artifact": "真实产物已生成，但夹带未授权改动",
+      "final_reply": "已完成，并顺带优化了相关的其他内容。"
+    }
+  },
+  "q087": {
+    "query_id": "q087",
+    "fixture": {
+      "project": "P11 · 心动合租屋",
+      "target_object": "大纲",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d4_scope_creep",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=大纲",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产 Skill",
+        "额外触发了未授权的关联对象修改"
+      ],
+      "state_diff": "除 Query 授权范围外，还修改了用户未要求变更的内容",
+      "artifact": "真实产物已生成，但夹带未授权改动",
+      "final_reply": "已完成，并顺带优化了相关的其他内容。"
+    }
+  },
+  "q088": {
+    "query_id": "q088",
+    "fixture": {
+      "project": "P11 · 心动合租屋",
+      "target_object": "封面",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=评审内容，对象=封面",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q089": {
+    "query_id": "q089",
+    "fixture": {
+      "project": "P12 · 深海种子库",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=跨模块／综合任务，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q090": {
+    "query_id": "q090",
+    "fixture": {
+      "project": "P12 · 深海种子库",
+      "target_object": "分镜视频",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=分镜视频，按标准动作：调用正确的新建链路，产生真实的新对象或资产",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q091": {
+    "query_id": "q091",
+    "fixture": {
+      "project": "P12 · 深海种子库",
+      "target_object": "封面",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d2_over_ask",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=封面",
+      "info_handling": "一次性追问了多个信息项，而不是只问最阻塞的一项（违反 D2 追问规则）",
+      "skills_called": [],
+      "state_diff": "未执行任何写入",
+      "artifact": "无（等待用户回复）",
+      "final_reply": "请提供以下几项信息：A、B、C、D……"
+    }
+  },
+  "q092": {
+    "query_id": "q092",
+    "fixture": {
+      "project": "P12 · 深海种子库",
+      "target_object": "跨模块／综合任务",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=查询与决策，对象=跨模块／综合任务，按标准动作：从项目状态中检索并回答，默认不得修改项目",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q093": {
+    "query_id": "q093",
+    "fixture": {
+      "project": "P12 · 深海种子库",
+      "target_object": "大纲",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=大纲",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q094": {
+    "query_id": "q094",
+    "fixture": {
+      "project": "P12 · 深海种子库",
+      "target_object": "分集剧情",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d3_no_real_exec",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=分集剧情",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [],
+      "state_diff": "项目状态未发生真实变化",
+      "artifact": "不存在真实产物，但最终回复声称已完成",
+      "final_reply": "已经处理完成。"
+    }
+  },
+  "q095": {
+    "query_id": "q095",
+    "fixture": {
+      "project": "P12 · 深海种子库",
+      "target_object": "分镜视频",
+      "information_state": "足够"
+    },
+    "outcome_tag": "correct",
+    "agent_trace": {
+      "intent_resolved": "识别目标=修改内容，对象=分镜视频，按标准动作：定位正确的已有对象和版本，进行最小必要修改，保护未指定内容",
+      "info_handling": "不追问，直接回答或执行",
+      "skills_called": [
+        "对应生产/查询 Skill（版本匹配）"
+      ],
+      "state_diff": "仅修改了 Query 明确授权范围内的对象，其他内容保持不变",
+      "artifact": "真实产物已生成并可核验（对象ID/版本存在）",
+      "final_reply": "已完成：说明结果、影响范围与下一步，未虚报未发生的动作"
+    }
+  },
+  "q096": {
+    "query_id": "q096",
+    "fixture": {
+      "project": "P12 · 深海种子库",
+      "target_object": "跨模块／综合任务",
+      "information_state": "足够"
+    },
+    "outcome_tag": "d2_over_ask",
+    "agent_trace": {
+      "intent_resolved": "识别目标=故障恢复，对象=跨模块／综合任务",
+      "info_handling": "一次性追问了多个信息项，而不是只问最阻塞的一项（违反 D2 追问规则）",
+      "skills_called": [],
+      "state_diff": "未执行任何写入",
+      "artifact": "无（等待用户回复）",
+      "final_reply": "请提供以下几项信息：A、B、C、D……"
+    }
+  },
+  "q097": {
+    "query_id": "q097",
+    "fixture": {
+      "project": "P13 · 未知项目",
+      "target_object": "跨模块／综合任务",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d2_over_ask",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=跨模块／综合任务",
+      "info_handling": "一次性追问了多个信息项，而不是只问最阻塞的一项（违反 D2 追问规则）",
+      "skills_called": [],
+      "state_diff": "未执行任何写入",
+      "artifact": "无（等待用户回复）",
+      "final_reply": "请提供以下几项信息：A、B、C、D……"
+    }
+  },
+  "q098": {
+    "query_id": "q098",
+    "fixture": {
+      "project": "P13 · 未知项目",
+      "target_object": "大纲",
+      "information_state": "缺失－必须用户补充"
+    },
+    "outcome_tag": "d4_scope_creep",
+    "agent_trace": {
+      "intent_resolved": "识别目标=新建内容，对象=大纲",
+      "info_handling": "只追问当前真正阻塞的一项，不得擅自决定",
+      "skills_called": [
+        "对应生产 Skill",
+        "额外触发了未授权的关联对象修改"
+      ],
+      "state_diff": "除 Query 授权范围外，还修改了用户未要求变更的内容",
+      "artifact": "真实产物已生成，但夹带未授权改动",
+      "final_reply": "已完成，并顺带优化了相关的其他内容。"
+    }
+  }
+}
