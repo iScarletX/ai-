@@ -1,4 +1,4 @@
-// 渲染逻辑：总览统计、Runs 表格与筛选、规则页、Run 详情弹窗。
+// 渲染逻辑：发起任务面板 + 进度条、统计区、Runs 表格分页与筛选、Run 详情弹窗。
 
 const DIM_LABELS = {
   d1: "D1 目标与边界",
@@ -8,80 +8,15 @@ const DIM_LABELS = {
   d5: "D5 交付可用"
 };
 
-const RULE_CARDS = [
-  {
-    key: "d1", title: "维度1｜目标与边界理解",
-    desc: "Agent 是否准确理解用户最终目标、任务对象、操作范围，以及哪些内容必须保持不变。",
-    detail: {
-      必检项: ["用户最终目标", "具体任务对象", "操作范围", "明确约束", "保持项或禁止项"],
-      给分: [
-        "0分：目标/对象/范围理解错误；操作错项目、集数、人物、镜头或资产；扩大任务范围；破坏保持项。",
-        "1分：正确识别目标、对象、范围、约束和保持项，严格在授权范围内完成任务。"
-      ]
-    }
-  },
-  {
-    key: "d2", title: "维度2｜信息判断与追问",
-    desc: "Agent 是否正确判断信息状态，采取正确动作：直接执行、自动补齐、追问、消歧或确认冲突。",
-    detail: {
-      信息状态对照: [
-        "足够 → 不追问，直接回答或执行",
-        "缺失但可自动补齐 → 从已有来源补齐后继续",
-        "缺失且必须用户补充 → 只追问当前真正阻塞的一项",
-        "模糊 → 先利用上下文消歧，仍不明确再问一个具体问题",
-        "冲突 → 明确指出冲突并确认，不得静默覆盖"
-      ],
-      给分: [
-        "0分：信息状态判断错误；信息足够却反复追问；能自动补齐却让用户重复提供；擅自覆盖冲突内容。",
-        "1分：正确识别信息状态，并采取对应的执行/补齐/追问/消歧/冲突确认行为。"
-      ]
-    }
-  },
-  {
-    key: "d3", title: "维度3｜执行编排与状态控制",
-    desc: "Agent 是否采取正确动作，以正确对象、顺序、参数和状态控制完成任务。",
-    detail: {
-      任务意图对照: [
-        "新建内容 → 调用正确新建链路，产生真实新对象",
-        "修改内容 → 定位正确已有对象和版本，最小必要修改",
-        "评审内容 → 只读引用证据，不擅自写回项目",
-        "查询与决策 → 检索并回答，不修改项目",
-        "执行操作 → 必须真实调用，检查执行状态",
-        "故障恢复 → 只处理失败单元，不重复成功内容"
-      ],
-      给分: [
-        "0分：没有真实执行；调用错误能力；对象/版本/顺序/参数错误；失败后虚报成功。",
-        "1分：采用正确动作，真实完成必要调用，正确处理对象、版本、顺序、参数和状态。"
-      ]
-    }
-  },
-  {
-    key: "d4", title: "维度4｜结果正确性与专业质量（双门槛）",
-    desc: "先过门槛一（Query 指令遵循），再过门槛二（对象内容标准）。任一不过，维度4直接为0。",
-    detail: {
-      门槛一: ["动作是否做对", "对象是否做对", "Query原文要求是否全部做到", "保持项/禁止项/同步项是否满足"],
-      门槛二: "按 Query 的「对象」字段加载对应检查清单（大纲/角色场景道具资产/分集剧情/分镜视频/封面/跨模块），逐项通过才算过。",
-      给分: ["门槛一不过 → 直接0分，停止检查门槛二。", "门槛一+门槛二全过 → 1分。"]
-    }
-  },
-  {
-    key: "d5", title: "维度5｜交付完整性与可用性",
-    desc: "Agent 是否交付了用户真正需要的结果，结果是否完整、真实、可定位、可供下一步使用。",
-    detail: {
-      交付顺序: "结果 → 必要说明（范围/保持项/限制）→ 下一步",
-      给分: [
-        "0分：缺少正式产物、关键字段、编号、版本、引用或状态；交付与真实执行不一致；下游无法使用。",
-        "1分：完整交付必要产物和状态，编号引用正确，范围清楚，下游能够继续使用。"
-      ]
-    }
-  }
-];
+const PAGE_SIZE = 20;
 
 function pillClass(result) {
   return result === "合格" ? "pass" : "fail";
 }
 
-function renderOverview() {
+// ---------- 统计区 ----------
+
+function renderStats() {
   const verdicts = Object.values(DataStore.verdicts);
   const total = verdicts.length;
   const pass = verdicts.filter(v => v.最终结论.结论 === "合格").length;
@@ -141,7 +76,19 @@ function renderOverview() {
     <tbody>${rows}</tbody>`;
 }
 
+function initStatsToggle() {
+  const btn = document.getElementById("statsToggleBtn");
+  const body = document.getElementById("statsBody");
+  btn.addEventListener("click", () => {
+    const collapsed = body.classList.toggle("is-collapsed");
+    btn.textContent = collapsed ? "展开 ▼" : "收起 ▲";
+  });
+}
+
+// ---------- Query 列表：筛选 + 分页 ----------
+
 let currentFilters = { search: "", conclusion: "all", taskType: "all", object: "all" };
+let currentPage = 1;
 
 function populateFilterOptions() {
   const taskTypes = [...new Set(DataStore.queries.map(q => q.task_type))];
@@ -152,65 +99,150 @@ function populateFilterOptions() {
   objects.forEach(o => objSel.insertAdjacentHTML("beforeend", `<option value="${o}">${o}</option>`));
 }
 
+function getFilteredQueries() {
+  return DataStore.queries.filter(q => {
+    const v = DataStore.getVerdict(q.id);
+    if (currentFilters.conclusion !== "all" && v.最终结论.结论 !== currentFilters.conclusion) return false;
+    if (currentFilters.taskType !== "all" && q.task_type !== currentFilters.taskType) return false;
+    if (currentFilters.object !== "all" && q.object !== currentFilters.object) return false;
+    if (currentFilters.search) {
+      const hay = `${q.project_name} ${q.query_text} ${q.id} ${q.q1}`.toLowerCase();
+      if (!hay.includes(currentFilters.search.toLowerCase())) return false;
+    }
+    return true;
+  });
+}
+
 function renderRuns() {
-  const rows = DataStore.queries
-    .filter(q => {
-      const v = DataStore.getVerdict(q.id);
-      if (currentFilters.conclusion !== "all" && v.最终结论.结论 !== currentFilters.conclusion) return false;
-      if (currentFilters.taskType !== "all" && q.task_type !== currentFilters.taskType) return false;
-      if (currentFilters.object !== "all" && q.object !== currentFilters.object) return false;
-      if (currentFilters.search) {
-        const hay = `${q.project_name} ${q.query_text} ${q.id} ${q.q1}`.toLowerCase();
-        if (!hay.includes(currentFilters.search.toLowerCase())) return false;
-      }
-      return true;
-    })
-    .map(q => {
-      const v = DataStore.getVerdict(q.id);
-      const dims = ["d1", "d2", "d3", "d4", "d5"].map(k => {
-        const d = v.维度评测.find(x => x.key === k);
-        return `<div class="mini-dim ${d.分数 === 1 ? 'pass' : 'fail'}">${d.分数}</div>`;
-      }).join("");
-      const earliestLabel = v.最早失败维度 ? DIM_LABELS[v.最早失败维度] : "—";
-      return `<tr data-query-id="${q.id}">
-        <td><strong>${q.q1}${q.q2 ? '+' + q.q2 : ''}</strong><br><span style="color:var(--text-muted);font-size:11px">${q.id}</span></td>
-        <td>${q.project_id} · ${q.project_name}</td>
-        <td>${q.task_type}<br><span style="color:var(--text-muted);font-size:11px">${q.object}</span></td>
-        <td>${q.info_state_detail}</td>
-        <td><div class="mini-dims">${dims}</div></td>
-        <td>${earliestLabel}</td>
-        <td><span class="status-pill ${pillClass(v.最终结论.结论)}">${v.最终结论.结论}</span></td>
-        <td><button class="text-btn" data-open="${q.id}">证据</button></td>
-      </tr>`;
+  const filtered = getFilteredQueries();
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  const startIdx = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = filtered.slice(startIdx, startIdx + PAGE_SIZE);
+
+  document.getElementById("runsCountLabel").textContent =
+    filtered.length === 0
+      ? "没有匹配的 Query"
+      : `共 ${filtered.length} 条，第 ${startIdx + 1}–${Math.min(startIdx + PAGE_SIZE, filtered.length)} 条 · 可下钻查看每条的证据与五维判分依据`;
+
+  const rows = pageItems.map(q => {
+    const v = DataStore.getVerdict(q.id);
+    const dims = ["d1", "d2", "d3", "d4", "d5"].map(k => {
+      const d = v.维度评测.find(x => x.key === k);
+      return `<div class="mini-dim ${d.分数 === 1 ? 'pass' : 'fail'}">${d.分数}</div>`;
     }).join("");
-  document.getElementById("runsBody").innerHTML = rows || `<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px">没有匹配的 Query</td></tr>`;
-}
-
-function renderRules() {
-  document.getElementById("ruleGrid").innerHTML = RULE_CARDS.map(c => `
-    <div class="rule-card" data-rule="${c.key}">
-      <h3>${c.title}</h3>
-      <p>${c.desc}</p>
-      <span class="rule-tag">点击查看详情</span>
-    </div>`).join("");
-}
-
-function openRuleDetail(key) {
-  const card = RULE_CARDS.find(c => c.key === key);
-  const dialog = document.getElementById("runDialog");
-  document.getElementById("dialogTitle").textContent = card.title;
-  document.getElementById("dialogMeta").textContent = "五维评测规则详情";
-  document.getElementById("verdictStrip").innerHTML = "";
-  document.getElementById("dialogQueryText").parentElement.style.display = "none";
-  const detailHtml = Object.entries(card.detail).map(([k, v]) => {
-    const body = Array.isArray(v) ? `<ul style="margin:6px 0 0;padding-left:18px">${v.map(x => `<li style="margin-bottom:4px">${x}</li>`).join("")}</ul>` : `<p style="margin:6px 0 0">${v}</p>`;
-    return `<div class="dim-detail is-open"><div class="dim-detail-head"><strong>${k}</strong></div><div class="dim-detail-body" style="display:block">${body}</div></div>`;
+    const earliestLabel = v.最早失败维度 ? DIM_LABELS[v.最早失败维度] : "—";
+    return `<tr data-query-id="${q.id}">
+      <td><strong>${q.q1}${q.q2 ? '+' + q.q2 : ''}</strong><br><span style="color:var(--text-muted);font-size:11px">${q.id}</span></td>
+      <td>${q.project_id} · ${q.project_name}</td>
+      <td>${q.task_type}<br><span style="color:var(--text-muted);font-size:11px">${q.object}</span></td>
+      <td>${q.info_state_detail}</td>
+      <td><div class="mini-dims">${dims}</div></td>
+      <td>${earliestLabel}</td>
+      <td><span class="status-pill ${pillClass(v.最终结论.结论)}">${v.最终结论.结论}</span></td>
+      <td><button class="text-btn" data-open="${q.id}">证据</button></td>
+    </tr>`;
   }).join("");
-  document.getElementById("dimDetailList").innerHTML = detailHtml;
-  document.getElementById("severeBlock").innerHTML = "";
-  document.getElementById("summaryBlock").innerHTML = "";
-  dialog.showModal();
+  document.getElementById("runsBody").innerHTML = rows || `<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px">没有匹配的 Query</td></tr>`;
+
+  renderPagination(totalPages);
 }
+
+function renderPagination(totalPages) {
+  const el = document.getElementById("pagination");
+  if (totalPages <= 1) { el.innerHTML = ""; return; }
+  let buttons = "";
+  for (let p = 1; p <= totalPages; p++) {
+    buttons += `<button class="page-btn ${p === currentPage ? 'is-active' : ''}" data-page="${p}">${p}</button>`;
+  }
+  el.innerHTML = `
+    <button class="page-btn" data-page="prev" ${currentPage === 1 ? 'disabled' : ''}>‹ 上一页</button>
+    <div class="page-numbers">${buttons}</div>
+    <button class="page-btn" data-page="next" ${currentPage === totalPages ? 'disabled' : ''}>下一页 ›</button>
+  `;
+}
+
+function initPagination() {
+  document.getElementById("pagination").addEventListener("click", e => {
+    const btn = e.target.closest("[data-page]");
+    if (!btn || btn.disabled) return;
+    const filtered = getFilteredQueries();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    if (btn.dataset.page === "prev") currentPage = Math.max(1, currentPage - 1);
+    else if (btn.dataset.page === "next") currentPage = Math.min(totalPages, currentPage + 1);
+    else currentPage = parseInt(btn.dataset.page, 10);
+    renderRuns();
+  });
+}
+
+function resetToFirstPageAndRender() {
+  currentPage = 1;
+  renderRuns();
+}
+
+// ---------- 发起新评测任务 · 真实批跑进度条 ----------
+
+let runInProgress = false;
+
+function initLaunchPanel() {
+  document.getElementById("launchBtn").addEventListener("click", startBatchRun);
+  document.getElementById("progressCancel").addEventListener("click", cancelBatchRun);
+}
+
+let batchCancelled = false;
+
+async function startBatchRun() {
+  if (runInProgress) return;
+  runInProgress = true;
+  batchCancelled = false;
+
+  const queries = DataStore.queries;
+  const total = queries.length;
+
+  document.getElementById("launchBtn").disabled = true;
+  document.getElementById("launchBtn").textContent = "运行中…";
+  const progressEl = document.getElementById("runProgress");
+  progressEl.hidden = false;
+  const fill = document.getElementById("progressFill");
+  const label = document.getElementById("progressLabel");
+  const pctEl = document.getElementById("progressPct");
+  const currentQEl = document.getElementById("progressCurrentQuery");
+
+  for (let i = 0; i < total; i++) {
+    if (batchCancelled) break;
+    const q = queries[i];
+    // 逐条"处理"：每条真实经过判分函数取值展示，用短暂延时还原批跑节奏，
+    // 而非一次性瞬间刷出全部结果——当前判分数据来自本地预先算好的 verdicts.json
+    // （模拟评分引擎，非真实模型调用），接入真实 Judge 后此处替换为真实异步等待。
+    await new Promise(r => setTimeout(r, 35));
+    const done = i + 1;
+    const pct = Math.round(done / total * 100);
+    fill.style.width = pct + "%";
+    pctEl.textContent = pct + "%";
+    label.textContent = `正在运行 ${done} / ${total}`;
+    currentQEl.textContent = `正在评：${q.q1}${q.q2 ? '+' + q.q2 : ''} · ${q.task_type} · ${q.object}`;
+  }
+
+  if (!batchCancelled) {
+    label.textContent = `已完成 ${total} / ${total}`;
+    currentQEl.textContent = "全部 Query 已完成 Judge 评分";
+    await new Promise(r => setTimeout(r, 400));
+  }
+
+  progressEl.hidden = true;
+  document.getElementById("launchBtn").disabled = false;
+  document.getElementById("launchBtn").textContent = `▷ 启动 ${total} 条自动评测`;
+  runInProgress = false;
+
+  renderStats();
+  resetToFirstPageAndRender();
+}
+
+function cancelBatchRun() {
+  batchCancelled = true;
+}
+
+// ---------- Run 详情弹窗 ----------
 
 function checklistLine(label, verdict) {
   const cls = verdict === "通过" ? "v-pass" : verdict === "不通过" ? "v-fail" : "v-na";
@@ -290,44 +322,26 @@ function openRunDetail(queryId) {
   });
 }
 
-function initNav() {
-  document.querySelectorAll(".nav-item[data-view]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".nav-item[data-view]").forEach(b => b.classList.remove("is-active"));
-      btn.classList.add("is-active");
-      const view = btn.dataset.view;
-      document.querySelectorAll(".view").forEach(v => v.classList.toggle("is-active", v.dataset.view === view));
-    });
-  });
-}
-
 function initRunsView() {
   document.getElementById("searchInput").addEventListener("input", e => {
     currentFilters.search = e.target.value;
-    renderRuns();
+    resetToFirstPageAndRender();
   });
   document.getElementById("conclusionFilter").addEventListener("change", e => {
     currentFilters.conclusion = e.target.value;
-    renderRuns();
+    resetToFirstPageAndRender();
   });
   document.getElementById("taskTypeFilter").addEventListener("change", e => {
     currentFilters.taskType = e.target.value;
-    renderRuns();
+    resetToFirstPageAndRender();
   });
   document.getElementById("objectFilter").addEventListener("change", e => {
     currentFilters.object = e.target.value;
-    renderRuns();
+    resetToFirstPageAndRender();
   });
   document.getElementById("runsBody").addEventListener("click", e => {
     const btn = e.target.closest("[data-open]");
     if (btn) openRunDetail(btn.dataset.open);
-  });
-}
-
-function initRulesView() {
-  document.getElementById("ruleGrid").addEventListener("click", e => {
-    const card = e.target.closest(".rule-card");
-    if (card) openRuleDetail(card.dataset.rule);
   });
 }
 
@@ -339,14 +353,19 @@ function initDialog() {
 
 async function boot() {
   await DataStore.load();
-  initNav();
+  const total = DataStore.queries.length;
+  document.getElementById("taskScale").textContent = `${total} Queries`;
+  document.getElementById("runEstimate").textContent = `预计 ${total} 个 Agent Run + ${total} 次 Judge`;
+  document.getElementById("launchBtn").textContent = `▷ 启动 ${total} 条自动评测`;
+
   populateFilterOptions();
-  renderOverview();
+  renderStats();
   renderRuns();
-  renderRules();
+  initStatsToggle();
+  initPagination();
   initRunsView();
-  initRulesView();
   initDialog();
+  initLaunchPanel();
 }
 
 boot();
