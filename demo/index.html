@@ -39,14 +39,18 @@
 
       <!-- 发起新评测任务 -->
       <section class="panel launch-panel" id="launchPanel">
-        <div class="panel-head">
+        <div class="panel-head is-collapsible" id="launchToggle">
           <div>
             <h2>新建 AI 评测任务</h2>
-            <p>每条 Query 先运行被测 Agent，再由所选 Judge 模型按冻结规则评分。</p>
+            <p id="launchSummaryLine">测试集：Query Matrix v2.4 · 98 Queries　·　Judge：judge-sim-v0　·　评测规则：互动影游五维标准 v2</p>
           </div>
-          <span class="status-pill neutral" id="runEstimate">预计 98 个 Agent Run + 98 次 Judge</span>
+          <div class="launch-head-right">
+            <span class="status-pill neutral" id="runEstimate">预计 98 个 Agent Run + 98 次 Judge</span>
+            <button class="text-btn" id="launchToggleBtn">展开配置 ▼</button>
+            <button class="btn-primary" id="launchBtn">▷ 启动 98 条自动评测</button>
+          </div>
         </div>
-        <div class="launch-grid">
+        <div class="launch-grid" id="launchGrid" hidden>
           <div class="launch-fields">
             <div class="field">
               <label for="selDataset">测试集</label>
@@ -88,7 +92,6 @@
               <span>冻结合同</span>
               <code id="frozenContract">matrix98 + build_nexplay-sim + sp_sim-snapshot + rules_v2 + judge-sim</code>
             </div>
-            <button class="btn-primary btn-launch" id="launchBtn">▷ 启动 98 条自动评测</button>
           </aside>
         </div>
 
@@ -111,7 +114,7 @@
         <div class="panel-head is-collapsible" id="statsToggle">
           <div>
             <h2>本批次评测统计</h2>
-            <p>五维通过率、最早失败维度分布、按任务类型合格率。</p>
+            <p>五维通过率、按对象类型 / 信息状态的合格率、按任务类型合格率。</p>
           </div>
           <button class="text-btn" id="statsToggleBtn">收起 ▲</button>
         </div>
@@ -120,15 +123,27 @@
           <div class="stats-grid">
             <div class="stats-col">
               <h3>五维通过率</h3>
+              <p class="stats-col-note">每个维度独立统计，高分不能抵消任何单一维度的失败。</p>
               <div class="dim-bars" id="dimBars"></div>
             </div>
             <div class="stats-col">
-              <h3>最早失败维度分布</h3>
+              <h3>按对象类型合格率</h3>
+              <p class="stats-col-note">哪类产出物更容易出问题——用于定位薄弱环节，而非单纯归因到某一维度。</p>
               <div class="dim-bars" id="failBars"></div>
             </div>
           </div>
-          <div class="table-wrap">
-            <table id="taskTypeTable"></table>
+          <div class="stats-grid">
+            <div class="stats-col">
+              <h3>按信息状态合格率</h3>
+              <p class="stats-col-note">信息缺失/模糊/冲突时，Agent 表现是否明显下降。</p>
+              <div class="dim-bars" id="infoBars"></div>
+            </div>
+            <div class="stats-col">
+              <h3>按主任务类型合格率</h3>
+              <div class="table-wrap">
+                <table id="taskTypeTable"></table>
+              </div>
+            </div>
           </div>
         </div>
       </section>

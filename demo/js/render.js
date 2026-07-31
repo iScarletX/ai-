@@ -43,19 +43,39 @@ function renderStats() {
   }).join("");
   document.getElementById("dimBars").innerHTML = dimBars;
 
-  const failCounts = {};
-  dimKeys.forEach(k => failCounts[k] = 0);
-  verdicts.forEach(v => { if (v.最早失败维度) failCounts[v.最早失败维度]++; });
-  const maxFail = Math.max(1, ...Object.values(failCounts));
-  const failBars = dimKeys.map(k => {
-    const pct = Math.round(failCounts[k] / maxFail * 100);
+  const byObject = {};
+  DataStore.queries.forEach(q => {
+    const v = DataStore.getVerdict(q.id);
+    if (!byObject[q.object]) byObject[q.object] = { total: 0, pass: 0 };
+    byObject[q.object].total++;
+    if (v.最终结论.结论 === "合格") byObject[q.object].pass++;
+  });
+  const objectBars = Object.entries(byObject).map(([obj, s]) => {
+    const pct = Math.round(s.pass / s.total * 100);
     return `<div class="dim-bar-row">
-      <span class="bar-label">${DIM_LABELS[k]}</span>
-      <div class="dim-bar-track"><div class="dim-bar-fill fail-fill" style="width:${pct}%"></div></div>
-      <span class="bar-value">${failCounts[k]} 条</span>
+      <span class="bar-label">${obj}</span>
+      <div class="dim-bar-track"><div class="dim-bar-fill ${pct < 50 ? 'fail-fill' : ''}" style="width:${pct}%"></div></div>
+      <span class="bar-value">${s.pass}/${s.total}</span>
     </div>`;
   }).join("");
-  document.getElementById("failBars").innerHTML = failBars;
+  document.getElementById("failBars").innerHTML = objectBars;
+
+  const byInfoState = {};
+  DataStore.queries.forEach(q => {
+    const v = DataStore.getVerdict(q.id);
+    if (!byInfoState[q.info_state_detail]) byInfoState[q.info_state_detail] = { total: 0, pass: 0 };
+    byInfoState[q.info_state_detail].total++;
+    if (v.最终结论.结论 === "合格") byInfoState[q.info_state_detail].pass++;
+  });
+  const infoBars = Object.entries(byInfoState).map(([state, s]) => {
+    const pct = Math.round(s.pass / s.total * 100);
+    return `<div class="dim-bar-row">
+      <span class="bar-label">${state}</span>
+      <div class="dim-bar-track"><div class="dim-bar-fill ${pct < 50 ? 'fail-fill' : ''}" style="width:${pct}%"></div></div>
+      <span class="bar-value">${s.pass}/${s.total}</span>
+    </div>`;
+  }).join("");
+  document.getElementById("infoBars").innerHTML = infoBars;
 
   const byTaskType = {};
   DataStore.queries.forEach(q => {
@@ -185,8 +205,26 @@ function resetToFirstPageAndRender() {
 let runInProgress = false;
 
 function initLaunchPanel() {
-  document.getElementById("launchBtn").addEventListener("click", startBatchRun);
-  document.getElementById("progressCancel").addEventListener("click", cancelBatchRun);
+  document.getElementById("launchBtn").addEventListener("click", e => {
+    e.stopPropagation();
+    startBatchRun();
+  });
+  document.getElementById("progressCancel").addEventListener("click", e => {
+    e.stopPropagation();
+    cancelBatchRun();
+  });
+}
+
+function initLaunchToggle() {
+  const header = document.getElementById("launchToggle");
+  const grid = document.getElementById("launchGrid");
+  const btn = document.getElementById("launchToggleBtn");
+  header.addEventListener("click", e => {
+    if (e.target.closest("#launchBtn") || e.target.closest("#progressCancel")) return;
+    const isHidden = grid.hidden;
+    grid.hidden = !isHidden;
+    btn.textContent = isHidden ? "收起配置 ▲" : "展开配置 ▼";
+  });
 }
 
 let batchCancelled = false;
@@ -366,6 +404,7 @@ async function boot() {
   initRunsView();
   initDialog();
   initLaunchPanel();
+  initLaunchToggle();
 }
 
 boot();

@@ -137,8 +137,10 @@ tbody tr:hover { background: var(--surface-alt); }
 .text-btn:hover { background: var(--surface-alt); }
 
 /* 发起新评测任务面板 */
-.launch-panel .panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.launch-grid { display: grid; grid-template-columns: 1fr 260px; gap: 20px; margin-top: 6px; }
+.launch-panel .panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; cursor: pointer; }
+.launch-panel .panel-head p { font-size: 12px; color: var(--text-muted); }
+.launch-head-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.launch-grid { display: grid; grid-template-columns: 1fr 260px; gap: 20px; margin-top: 14px; }
 .launch-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .launch-fields .field:last-child { grid-column: 1 / -1; }
 .field label { display: block; font-size: 11.5px; color: var(--text-muted); margin-bottom: 5px; font-weight: 600; }
@@ -163,7 +165,7 @@ tbody tr:hover { background: var(--surface-alt); }
 }
 .btn-primary:hover { background: var(--brand-deep); }
 .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-.btn-launch { width: 100%; margin-top: 4px; }
+.launch-head-right .btn-primary { padding: 7px 14px; font-size: 12.5px; }
 
 /* 批跑进度条 */
 .run-progress { margin-top: 18px; border-top: 1px solid var(--border); padding-top: 16px; }
@@ -178,7 +180,11 @@ tbody tr:hover { background: var(--surface-alt); }
 .panel-head.is-collapsible { display: flex; justify-content: space-between; align-items: flex-start; }
 .stats-body.is-collapsed { display: none; }
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 16px 0; }
-.stats-col h3 { font-size: 13px; margin: 0 0 10px; }
+.stats-col h3 { font-size: 13px; margin: 0 0 4px; }
+.stats-col-note { font-size: 11px; color: var(--text-muted); margin: 0 0 10px; }
+.stats-col .table-wrap table { font-size: 11.5px; }
+.stats-col .table-wrap thead th { font-size: 10px; padding: 6px 8px; }
+.stats-col .table-wrap tbody td { padding: 7px 8px; }
 
 /* 分页 */
 .pagination { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 16px; }
